@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: cloudbees-io/checkout@v1
         with:
-          repository: TARGET_ORG/PROJECT_NAME-api
+          repository: cb-golden-demo-org/ld-nov-hackers-api
       - uses: cloudbees-days/setup-kubeconfig
         name: Set kubeconfig
         with:
@@ -31,13 +31,13 @@ jobs:
         uses: cloudbees-io/helm-install@v1
         with:
           chart-location: ${{ cloudbees.workspace }}/chart
-          release-name: PROJECT_NAME-api
+          release-name: ld-nov-hackers-api
           namespace: ${{ vars.namespace }}
           values: |
             image:
-              repository: ${{ vars.DOCKER_USER }}/PROJECT_NAME-api
+              repository: ${{ vars.DOCKER_USER }}/ld-nov-hackers-api
               tag: ${{ inputs.artifactVersion }}
-            hostname: PROJECT_NAME-api.${{ inputs.environment }}.preview.cb-demos.io
+            hostname: ld-nov-hackers-api.${{ inputs.environment }}.preview.cb-demos.io
       - name: Register deployed artifact
         uses: cloudbees-io/register-deployed-artifact@v2
         with:
@@ -47,6 +47,6 @@ jobs:
         with:
           content: |-
             ## Deployed environment
-            [Dev frontend](https://PROJECT_NAME-api.${{ inputs.environment }}.preview.cb-demos.io/)
-            Running PROJECT_NAME-api:${{ inputs.artifactVersion }}
+            [Dev frontend](https://ld-nov-hackers-api.${{ inputs.environment }}.preview.cb-demos.io/)
+            Running ld-nov-hackers-api:${{ inputs.artifactVersion }}
           format: MARKDOWN
